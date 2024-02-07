@@ -8,12 +8,12 @@
 #include "shared/logger/format.h"
 #include "logger/config.h"
 
-#define log_error_m   alog::logger().error   (alog_line_location, "Server")
-#define log_warn_m    alog::logger().warn    (alog_line_location, "Server")
-#define log_info_m    alog::logger().info    (alog_line_location, "Server")
-#define log_verbose_m alog::logger().verbose (alog_line_location, "Server")
-#define log_debug_m   alog::logger().debug   (alog_line_location, "Server")
-#define log_debug2_m  alog::logger().debug2  (alog_line_location, "Server")
+#define log_error_m   alog::logger().error   (alog_line_location, "server")
+#define log_warn_m    alog::logger().warn    (alog_line_location, "server")
+#define log_info_m    alog::logger().info    (alog_line_location, "server")
+#define log_verbose_m alog::logger().verbose (alog_line_location, "server")
+#define log_debug_m   alog::logger().debug   (alog_line_location, "server")
+#define log_debug2_m  alog::logger().debug2  (alog_line_location, "server")
 
 // info - Общий уровень логирования, чаще всего предполагае вывод только информационных и error сообщений
 // debug - Уровень логирования разработки, который позволяет отследить поведение модулей системы на ходу
@@ -41,6 +41,16 @@
  *
 */
 using namespace std;
+
+qint64 fibanacciFunction(const qint64& fibanacciNumber){
+    qint64 firstFib = 0;
+    qint64 secondFib = 1;
+    if (fibanacciNumber == 0)
+        return 0;
+    if (fibanacciNumber == 1)
+        return 1;
+    return fibanacciFunction(fibanacciNumber-1) + fibanacciFunction(fibanacciNumber-2);
+}
 
 int main(int argc, char* argv[])
 {
@@ -87,14 +97,20 @@ int main(int argc, char* argv[])
     config::base().getValue("application.name", nameAppl);
 
     QString pathSaver = QString();
-    config::base().getValue("logger.file", pathSaver);
-//Фиббаначи
+    config::base().getValue("logger.file_win", pathSaver);
+
+//Фиббаначи начало
+    alog::logger().removeSaverStdOut();
+    alog::logger().addSaverStdOut(alog::Level::Info);
+
     qint64 fibanacciNumber = qint64();
-    config::base().getValue("filter.eight", fibanacciNumber);
+    config::base().getValue("fib.number", fibanacciNumber);
 
-
-
+    log_info_m << "Config fib number:" << fibanacciNumber;
+    log_info_m << "Position 0 = 0, position 1 = 1";
+    log_info_m << "Number:" << fibanacciNumber << " Result:" << fibanacciFunction(fibanacciNumber);
 //Конец фиббаначи
+
     config::observerBase().stop();
     alog::logger().stop();
 
