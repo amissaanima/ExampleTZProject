@@ -1,5 +1,5 @@
 import qbs
-//import QbsUtl
+import QbsUtl
 
 Product
 {
