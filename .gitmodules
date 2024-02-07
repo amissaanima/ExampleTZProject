@@ -10,3 +10,12 @@
 [submodule "src/yaml"]
 	path = src/yaml
 	url = https://github.com/hkarel/yaml-cpp.git
+[submodule "QbsExt"]
+	path = QbsExt
+	url = https://github.com/hkarel/QbsExt.git
+[submodule "src/yaml-cpp"]
+	path = src/yaml-cpp
+	url = https://github.com/hkarel/yaml-cpp.git
+[submodule "src/shared/SharedTools"]
+	path = src/shared/SharedTools
+	url = https://github.com/hkarel/SharedTools.git
